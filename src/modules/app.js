@@ -1,6 +1,14 @@
 "use strict";
 import DonateForm from "./donate-form.js";
 import { DonateList } from "./donate-list.js";
+import * as Utils from "../core/utils/index";
+
+const mockDonates = [
+	{ amount: 4, date: new Date() },
+	{ amount: 20, date: new Date() },
+	{ amount: 3, date: new Date() },
+	{ amount: 1, date: new Date() },
+];
 
 export class App {
 	#state;
@@ -9,8 +17,10 @@ export class App {
 
 	constructor() {
 		this.#state = {
-			donates: [{ amount: 1, date: new Date() }],
-			totalAmount: 1,
+			donates: mockDonates,
+			totalAmount: Utils.calculateSumOfNumbers(
+				mockDonates.map((donate) => donate.amount)
+			),
 		};
 		this.#donateForm = new DonateForm(
 			this.#state.totalAmount,

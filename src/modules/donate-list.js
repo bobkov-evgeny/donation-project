@@ -1,4 +1,6 @@
 "use strict";
+import { Settings as appSettings } from "../core/settings";
+import * as Utils from "../core/utils/index";
 
 export class DonateList {
 	#container;
@@ -22,10 +24,10 @@ export class DonateList {
 		currentDonates.forEach((donate) => {
 			const donateItemHTML = document.createElement("div");
 			donateItemHTML.className = "donate-item";
-			donateItemHTML.textContent = `${donate.date}`;
+			donateItemHTML.textContent = `${Utils.getFormattedTime(donate.date)} - `;
 
 			const amountHTML = document.createElement("b");
-			amountHTML.textContent = `${donate.amount}$`;
+			amountHTML.textContent = `${donate.amount}${appSettings.currency}`;
 
 			donateItemHTML.append(amountHTML);
 
@@ -47,10 +49,10 @@ export class DonateList {
 		currentDonates.forEach((donate) => {
 			const donateItemHTML = document.createElement("div");
 			donateItemHTML.className = "donate-item";
-			donateItemHTML.textContent = `${donate.date}`;
+			donateItemHTML.textContent = `${Utils.getFormattedTime(donate.date)} - `;
 
 			const amountHTML = document.createElement("b");
-			amountHTML.textContent = `${donate.amount}$`;
+			amountHTML.textContent = `${donate.amount}${appSettings.currency}`;
 
 			donateItemHTML.append(amountHTML);
 

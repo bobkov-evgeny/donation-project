@@ -1,4 +1,5 @@
 "use strict";
+import { Settings } from "../core/settings";
 
 export default class DonateForm {
 	#form;
@@ -16,26 +17,28 @@ export default class DonateForm {
 		this.#amount = newAmount;
 		document.querySelector(
 			"#total-amount"
-		).textContent = `Всего: ${newAmount}$`;
+		).textContent = `Всего: ${newAmount}${Settings.currency}`;
 	}
 
 	#submitListener(e) {
 		e.preventDefault();
 
-		const inputValue = e.target.querySelector("input").value;
+		const inputValue = e.target.querySelector("input");
 		const inputDate = new Date();
 
-		this.#createNewDonate({ amount: inputValue, date: inputDate });
+		this.#createNewDonate({ amount: inputValue.value, date: inputDate });
+
+		inputValue.value = "";
 	}
 
 	render() {
 		const titleHTML = document.createElement("h1");
 		titleHTML.id = "total-amount";
-		titleHTML.textContent = `Всего: ${this.#amount}$`;
+		titleHTML.textContent = `Всего: ${this.#amount}${Settings.currency}`;
 
 		const labelHTML = document.createElement("label");
 		labelHTML.className = "donate-form__input-label";
-		labelHTML.textContent = "Введите сумму в $";
+		labelHTML.textContent = `Введите сумму в ${Settings.currency}`;
 
 		const inputHTML = document.createElement("input");
 		inputHTML.className = "donate-form__donate-input";
