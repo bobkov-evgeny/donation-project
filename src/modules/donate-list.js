@@ -12,11 +12,7 @@ export class DonateList {
 		this.#donates = donates;
 	}
 
-	// ПОД ВОПРОСОМ
-	updateDonates(donates) {
-		this.#donates = donates;
-		document.querySelector(".donates-container__donates").remove();
-
+	#createDonatesMarkup() {
 		const donatesContainerHTML = document.createElement("div");
 		donatesContainerHTML.className = "donates-container__donates";
 
@@ -34,7 +30,14 @@ export class DonateList {
 			donatesContainerHTML.append(donateItemHTML);
 		});
 
-		this.#container.append(donatesContainerHTML);
+		return donatesContainerHTML;
+	}
+
+	updateDonates(donates) {
+		this.#donates = donates;
+		document.querySelector(".donates-container__donates").remove();
+
+		this.#container.append(this.#createDonatesMarkup());
 	}
 
 	render() {
@@ -42,24 +45,7 @@ export class DonateList {
 		titleHTML.className = "donates-container__title";
 		titleHTML.textContent = "Список донатов.";
 
-		const donatesContainerHTML = document.createElement("div");
-		donatesContainerHTML.className = "donates-container__donates";
-
-		const currentDonates = this.#donates;
-		currentDonates.forEach((donate) => {
-			const donateItemHTML = document.createElement("div");
-			donateItemHTML.className = "donate-item";
-			donateItemHTML.textContent = `${Utils.getFormattedTime(donate.date)} - `;
-
-			const amountHTML = document.createElement("b");
-			amountHTML.textContent = `${donate.amount}${appSettings.currency}`;
-
-			donateItemHTML.append(amountHTML);
-
-			donatesContainerHTML.append(donateItemHTML);
-		});
-
-		this.#container.append(titleHTML, donatesContainerHTML);
+		this.#container.append(titleHTML, this.#createDonatesMarkup());
 
 		return this.#container;
 	}
